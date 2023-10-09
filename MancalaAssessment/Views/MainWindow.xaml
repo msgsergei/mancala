@@ -1,0 +1,35 @@
+﻿<Window x:Class="MancalaWPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MancalaWPF.Views"
+        xmlns:vm="clr-namespace:MancalaWPF.ViewModels"
+        mc:Ignorable="d"
+        Title="Mancala" 
+        Width="810" 
+        ResizeMode="CanMinimize"
+        SizeToContent="Height">
+    <Window.Resources>
+        <vm:MainWindowViewModel x:Key="ViewModel"/>
+    </Window.Resources>
+
+    <StackPanel DataContext="{StaticResource ViewModel}" Background="{StaticResource BackgroundImageBrush}">
+
+        <local:GameView />
+
+        <StackPanel Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="140"/>
+                    <Setter Property="Margin" Value="4,12"/>
+                    <Setter Property="Padding" Value="5"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Command="{Binding RestartCommand}" Content="Restart Game"/>
+            <Button Command="{Binding NewGameWithComputerCommand}" Content="New One Player Game"/>
+            <Button Command="{Binding NewGameWithPlayerCommand}" Content="New Two Players Game"/>
+
+        </StackPanel>
+    </StackPanel>
+</Window>

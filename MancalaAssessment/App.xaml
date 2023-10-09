@@ -1,0 +1,27 @@
+﻿<Application x:Class="MancalaWPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MancalaWPF"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <ImageBrush x:Key="BackgroundImageBrush" ImageSource="/MancalaWPF;component/assets/background.jpg"/>
+        <ImageBrush x:Key="GameBoardImageBrush" ImageSource="/MancalaWPF;component/assets/board.png"/>
+        <BitmapImage x:Key="TrophyBitmapImage" UriSource="/MancalaWPF;component/assets/trophy.png" />
+        <BitmapImage x:Key="StoneBitmapImage" UriSource="/MancalaWPF;component/assets/stone.png" />
+        <ImageBrush x:Key="HumanPlayerImageBrush" ImageSource="/MancalaWPF;component/assets/player-human.png" />
+        <ImageBrush x:Key="ComputerPlayerImageBrush" ImageSource="/MancalaWPF;component/assets/player-robot.png" />
+
+        <Color x:Key="Player1Color">Lime</Color>
+        <Color x:Key="Player2Color">Yellow</Color>
+        <SolidColorBrush x:Key="Player1ColorBrush" Color="{StaticResource Player1Color}"/>
+        <SolidColorBrush x:Key="Player2ColorBrush" Color="{StaticResource Player2Color}"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="6,12"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="MinWidth" Value="140"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Padding" Value="12,6"/>
+        </Style>
+    </Application.Resources>
+</Application>

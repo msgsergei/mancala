@@ -1,0 +1,56 @@
+﻿<Button x:Class="MancalaWPF.Views.Controls.GameBoardPitButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MancalaWPF.Views.Controls"
+             mc:Ignorable="d" 
+             d:Content="12"
+             Margin="0"
+             Cursor="Hand"
+             MinWidth="0" MinHeight="0"
+             Width="86" Height="86">
+    <Button.Resources>
+        <SolidColorBrush x:Key="PlayerColorBrush" d:Color="red" 
+                         Color="{Binding PlayerColor, RelativeSource={RelativeSource AncestorType=local:GameBoardPitButton}}"/>
+    </Button.Resources>
+    <Button.Template>
+        <ControlTemplate TargetType="Button">
+            <Grid Background="Transparent">
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Grid.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                    From="0" To="20"
+                                    RepeatBehavior="Forever"
+                                    AutoReverse="True"
+                                    Duration="00:00:01.5" 
+                                    Storyboard.TargetName="blurEffect" 
+                                    Storyboard.TargetProperty="Radius"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
+
+                <Ellipse x:Name="ellipseGlow" Stroke="{StaticResource PlayerColorBrush}" StrokeThickness="3">
+                    <Ellipse.Effect>
+                        <BlurEffect x:Name="blurEffect" />
+                    </Ellipse.Effect>
+                </Ellipse>
+                <Ellipse x:Name="ellipseSolid" Stroke="{StaticResource PlayerColorBrush}" StrokeThickness="1" Opacity="0.8">
+                </Ellipse>
+                
+                <local:GameBoardStonesControl 
+                        d:Stones="10"
+                        Stones="{Binding Stones, RelativeSource={RelativeSource AncestorType=local:GameBoardPitButton}}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="ellipseGlow" Property="Visibility" Value="Hidden"/>
+                    <Setter TargetName="ellipseSolid" Property="Visibility" Value="Hidden"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Button.Template>
+</Button>

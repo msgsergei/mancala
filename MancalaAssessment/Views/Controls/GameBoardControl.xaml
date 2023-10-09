@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="MancalaWPF.Views.Controls.GameBoardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MancalaWPF.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignWidth="800"
+             d:DesignHeight="370">
+    <UserControl.Resources>
+        <Style x:Key="GameBoardPitButtonStyle" TargetType="local:GameBoardPitButton">
+        </Style>
+        <Style x:Key="Player1GameBoardPitButtonStyle" BasedOn="{StaticResource GameBoardPitButtonStyle}" TargetType="local:GameBoardPitButton">
+            <Setter Property="PlayerColor" Value="{StaticResource Player1Color}"/>
+        </Style>
+        <Style x:Key="Player2GameBoardPitButtonStyle" BasedOn="{StaticResource GameBoardPitButtonStyle}" TargetType="local:GameBoardPitButton">
+            <Setter Property="PlayerColor" Value="{StaticResource Player2Color}"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Height="370" Width="800" Background="{StaticResource GameBoardImageBrush}">
+
+        <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:GameBoardControl}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="80" />
+            </Grid.RowDefinitions>
+
+            <!-- ======================================================================================== -->
+            <!-- PLAYER #2: Store -->
+            <local:GameBoardSectionControl Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" 
+                                Stones="{Binding GameBoard.Player2Store}"                                
+                                IsLargeStonesCounter="True">
+                <local:GameBoardStonesControl Stones="{Binding GameBoard.Player2Store}"/>
+            </local:GameBoardSectionControl>
+
+            <!-- PLAYER #2: Pits -->
+            <ItemsControl ItemsSource="{Binding GameBoard.Player2Pits}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="6">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid FlowDirection="RightToLeft" Rows="1" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:GameBoardSectionControl Stones="{Binding Stones}">
+                            <local:GameBoardPitButton Style="{StaticResource Player2GameBoardPitButtonStyle}"
+                                Command="{Binding PitCommand, RelativeSource={RelativeSource AncestorType=local:GameBoardControl}}"
+                                CommandParameter="{Binding}"
+                                Stones="{Binding Stones}"/>
+                        </local:GameBoardSectionControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- ======================================================================================== -->
+            <!-- PLAYER #1: Pits -->
+            <ItemsControl ItemsSource="{Binding GameBoard.Player1Pits}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="6">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:GameBoardSectionControl Stones="{Binding Stones}" Dock="Bottom">
+                            <local:GameBoardPitButton Style="{StaticResource Player1GameBoardPitButtonStyle}"
+                                Command="{Binding PitCommand, RelativeSource={RelativeSource AncestorType=local:GameBoardControl}}"
+                                CommandParameter="{Binding}"
+                                Stones="{Binding Stones}"/>
+                        </local:GameBoardSectionControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- PLAYER #1: Store -->
+            <local:GameBoardSectionControl Grid.Column="7" Grid.Row="1" Grid.RowSpan="3" Dock="Bottom"
+                                Stones="{Binding GameBoard.Player1Store}"
+                                IsLargeStonesCounter="True">
+                <local:GameBoardStonesControl Stones="{Binding GameBoard.Player1Store}"/>
+            </local:GameBoardSectionControl>
+        </Grid>
+    </Grid>
+</UserControl>
